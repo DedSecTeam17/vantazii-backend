@@ -2,12 +2,10 @@ package com.example.vantazii.customer;
 
 
 import com.example.vantazii.CustomerRole.CustomerRole;
-import com.example.vantazii.core.AppRegxHelper;
-import lombok.AllArgsConstructor;
+import com.example.vantazii.core.CustomAnnotation.phoneNumber.PhoneNumber;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -33,6 +31,7 @@ import java.util.UUID;
 })
 public class Customer {
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
@@ -45,6 +44,8 @@ public class Customer {
             columnDefinition = "TEXT"
     )
     private String userName;
+
+
     //
     @Column(
             name = "email",
@@ -64,31 +65,16 @@ public class Customer {
     )
     @NotNull
     @NotBlank
-    @Pattern(regexp = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}")
+    @PhoneNumber
     private String phoneNumber;
 
-
-    @Column(
-            name = "sms_code",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
-    private String smsCode;
-
-
-    @Column(
-            name = "verified",
-            nullable = false,
-            columnDefinition = "BOOLEAN DEFAULT false"
-    )
-    private boolean verified;
 
     //
     @Column(
             name = "created_at",
-            nullable = false,
             columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
     )
+    @JsonIgnore
     private LocalDateTime createdAt;
 
 
@@ -97,6 +83,7 @@ public class Customer {
             mappedBy = "customer",
             fetch = FetchType.EAGER
     )
+    @JsonIgnore
     private List<CustomerRole> customerRoleIDS = new ArrayList<>();
 
 
