@@ -1,6 +1,7 @@
 package com.example.vantazii.customer;
 
 
+import com.example.vantazii.CustomerRole.CustomerRole;
 import com.example.vantazii.core.AppRegxHelper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -31,9 +34,9 @@ import java.util.UUID;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false,updatable = false,insertable = false)
+    @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
-//
+    //
     @NotNull
     @NotBlank(message = "Name is required :D")
     @Column(
@@ -42,7 +45,7 @@ public class Customer {
             columnDefinition = "TEXT"
     )
     private String userName;
-//
+    //
     @Column(
             name = "email",
             nullable = false,
@@ -61,7 +64,7 @@ public class Customer {
     )
     @NotNull
     @NotBlank
-    @Pattern(regexp = "^\\\\d{10}$")
+    @Pattern(regexp = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}")
     private String phoneNumber;
 
 
@@ -70,10 +73,6 @@ public class Customer {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    @NotNull
-    @NotBlank
-    @Max(4)
-    @Min(4)
     private String smsCode;
 
 
@@ -82,17 +81,23 @@ public class Customer {
             nullable = false,
             columnDefinition = "BOOLEAN DEFAULT false"
     )
-    @NotNull
-    @NotBlank
     private boolean verified;
 
-//
+    //
     @Column(
             name = "created_at",
             nullable = false,
             columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
     )
     private LocalDateTime createdAt;
+
+
+    @OneToMany(
+            cascade = {CascadeType.ALL},
+            mappedBy = "customer",
+            fetch = FetchType.EAGER
+    )
+    private List<CustomerRole> customerRoleIDS = new ArrayList<>();
 
 
 }
