@@ -1,3 +1,5 @@
+# VANTAZII :D / Backend
+
 # General journey
 
 Customer need to access the app to purchase **points so he can start gamble on games**
@@ -6,12 +8,12 @@ if he is correct he will receive a points can be purchased as money .
 
 Customer must only have only one account connected with his phone number .
 
-# Stack-holders :
+## Stack-holders :
 
 - Customer can : [Login - Purchase Point  - Receive points to be purchased - gamble on multiple matches ] / update his profile / view history
 - Admin to see all customer / manage leagues and matches
 
-# Payments & Purchase :
+##  Payments & Purchase :
 
 - Customers wallet / point system
 - From  the platform to the customer
