@@ -24,7 +24,10 @@ import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class VantaziiApplication {
@@ -48,7 +51,9 @@ public class VantaziiApplication {
     CommandLineRunner commandLineRunner(CustomerRepo customerRepo, CustomerRoleRepo customerRoleRepo, AppRoleRepo appRoleRepo, AppPermissionRepo appPermissionRepo, RolePermissionRepo rolePermissionRepo){
         return args -> {
 
-            Customer customer = new Customer();
+
+
+//            Customer customer = new Customer();
 //
 //            customer.setCreatedAt(LocalDateTime.now());
 //            customer.setEmail("melamin100@yahoo.com");
@@ -60,10 +65,63 @@ public class VantaziiApplication {
 //
 ////
 //            customerRepo.save(customer);
-//            AppRole appRole = new AppRole();
-//            appRole.setRoleName(RoleName.ADMIN);
+//            AppRole adminRole = new AppRole();
+//            adminRole.setRoleName(RoleName.ADMIN);
+//            AppRole customerRole = new AppRole();
+//            customerRole.setRoleName(RoleName.CUSTOMER);
+//            appRoleRepo.saveAll(List.of(adminRole,customerRole));
 //
-//            appRoleRepo.save(appRole);
+
+//            AppPermission read = new AppPermission();
+//            read.setPermissionName(PermissionName.READ);
+//            AppPermission write = new AppPermission();
+//            write.setPermissionName(PermissionName.WRITE);
+//            AppPermission delete = new AppPermission();
+//            delete.setPermissionName(PermissionName.DELETE);
+//            AppPermission update = new AppPermission();
+//            update.setPermissionName(PermissionName.UPDATE);
+
+//            appPermissionRepo.saveAll(List.of(read,write,delete,update));
+
+//            List<AppRole> roles  = appRoleRepo.findAll();
+//            List<AppPermission> permissions = appPermissionRepo.findAll();
+//
+//            roles.forEach(appRole -> {
+//                if (appRole.getRoleName().equals(RoleName.ADMIN)){
+////                    admin
+//                    permissions.forEach(permission ->{
+//                        RolePermission rolePermission = new RolePermission();
+//                        rolePermission.setAppRolePermission(appRole);
+//                        rolePermission.setAppPermission(permission);
+//                        RolePermissionID rolePermissionID = new RolePermissionID();
+//                        rolePermissionID.setRoleID(appRole.getId());
+//                        rolePermissionID.setPermissionID(permission.getId());
+//                        rolePermission.setRolePermissionID(rolePermissionID);
+//                        rolePermissionRepo.save(rolePermission);
+//                    });
+//                }else {
+////                    customer
+//                    List<AppPermission> customerPermissions = permissions.stream().filter(new Predicate<AppPermission>() {
+//                        @Override
+//                        public boolean test(AppPermission appPermission) {
+//                            return appPermission.getPermissionName().equals(PermissionName.READ);
+//                        }
+//                    }).collect(Collectors.toList());
+//                    customerPermissions.forEach(permission ->{
+//                        RolePermission rolePermission = new RolePermission();
+//                        rolePermission.setAppRolePermission(appRole);
+//                        rolePermission.setAppPermission(permission);
+//                        RolePermissionID rolePermissionID = new RolePermissionID();
+//                        rolePermissionID.setRoleID(appRole.getId());
+//                        rolePermissionID.setPermissionID(permission.getId());
+//                        rolePermission.setRolePermissionID(rolePermissionID);
+//                        rolePermissionRepo.save(rolePermission);
+//                    });
+//                }
+//
+//            });
+
+
 //            AppPermission appPermission =new AppPermission();
 //            appPermission.setPermissionName(PermissionName.READ);
 //            appPermissionRepo.save(appPermission);

@@ -37,16 +37,17 @@ public class AppOtpService {
         PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
         String otp = getRandomOTP(phoneNo);
         String otpMessage = "Dear Customer , Your OTP is " + otp + ". Use this otp to log in to vantazii Application";
-        Message message = Message
-                .creator(to, from,
-                        otpMessage)
-                .create();
+//        Message message = Message
+//                .creator(to, from,
+//                        otpMessage)
+//                .create();
         return  otp;
     }
 
     private String getRandomOTP(String phoneNo) {
         String otp =  new DecimalFormat("000000")
                 .format(new Random().nextInt(999999));
+        System.out.println(otp);
         otpCache.put(phoneNo,otp);
         return otp;
     }
