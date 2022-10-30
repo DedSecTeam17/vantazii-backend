@@ -1,6 +1,7 @@
 package com.example.vantazii.team;
 
 import com.example.vantazii.league.League;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -52,5 +53,6 @@ public class Team {
                     name = "league_fk"
             )
     )
+    @JsonIgnore
     private League league;
 }
