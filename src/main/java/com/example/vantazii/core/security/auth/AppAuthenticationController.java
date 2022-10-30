@@ -1,11 +1,9 @@
 package com.example.vantazii.core.security.auth;
 
 
-import com.example.vantazii.CustomerRole.CustomerRoleRepo;
 import com.example.vantazii.CustomerRole.CustomerRoleService;
 import com.example.vantazii.core.exception.ApiRequestException;
 import com.example.vantazii.core.exception.CustomStatus.ApiExceptionType;
-import com.example.vantazii.core.exception.ExceptionDetails.GenralDetails;
 import com.example.vantazii.core.security.auth.DTO.GenerateOtpDto;
 import com.example.vantazii.core.security.auth.DTO.GenerateTokenDto;
 import com.example.vantazii.core.security.auth.DTO.NewCustomerResponse;
@@ -13,10 +11,7 @@ import com.example.vantazii.core.security.auth.response.JwtResponse;
 import com.example.vantazii.core.security.jwt.JwtTokenService;
 import com.example.vantazii.customer.Customer;
 import com.example.vantazii.role.enums.RoleName;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +21,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

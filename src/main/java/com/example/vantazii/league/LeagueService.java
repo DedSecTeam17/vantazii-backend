@@ -1,6 +1,7 @@
 package com.example.vantazii.league;
 
 
+import com.example.vantazii.core.config.FileManagmentConfig;
 import com.example.vantazii.core.exception.ApiRequestException;
 import com.example.vantazii.core.exception.CustomStatus.ApiExceptionType;
 import com.example.vantazii.league.dto.LeagueDto;
@@ -11,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,9 +26,11 @@ public class LeagueService {
 
     private final LeagueRepo leagueRepo;
 
+    private FileManagmentConfig fileManagmentConfig;
+
 
     List<League> allLeagues() {
-        return leagueRepo.findAll();
+        return leagueRepo.findAll().stream().map(this::formLeagueWithFileUrl).collect(Collectors.toList());
     }
 
     League findById(UUID ID) {
@@ -45,7 +48,7 @@ public class LeagueService {
         league.setLeagueName(leagueDto.getLeagueName());
         uploadFileToEDM(leagueDto.getFile(), league);
         try {
-            return leagueRepo.save(league);
+            return formLeagueWithFileUrl(leagueRepo.save(league));
         } catch (Exception e) {
             throw new ApiRequestException("Error while saving the league", ApiExceptionType.DEFAULT);
         }
@@ -81,7 +84,7 @@ public class LeagueService {
                 uploadFileToEDM(leagueDto.getFile(), league);
             }
 
-            return leagueRepo.save(league);
+            return formLeagueWithFileUrl(leagueRepo.save(league));
         } else {
             throw new ApiRequestException("League not found", ApiExceptionType.DEFAULT);
         }
@@ -91,5 +94,11 @@ public class LeagueService {
         String filePath = fileManagmentService.uploadFile(file);
         league.setLeagueLogo(filePath);
     }
+
+    League formLeagueWithFileUrl(League league){
+        league.setLeagueLogo(fileManagmentConfig.getPathToPreviewFiles()+league.getLeagueLogo());
+        return  league;
+    }
+
 
 }

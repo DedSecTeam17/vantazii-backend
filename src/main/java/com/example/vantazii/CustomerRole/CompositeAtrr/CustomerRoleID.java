@@ -1,13 +1,11 @@
 package com.example.vantazii.CustomerRole.CompositeAtrr;
 
 
-import com.example.vantazii.role.AppRole;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.UUID;
 

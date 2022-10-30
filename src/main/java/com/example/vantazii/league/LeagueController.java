@@ -6,11 +6,9 @@ import com.example.vantazii.league.dto.LeagueDto;
 import com.example.vantazii.league.dto.UpdateLeagueDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -54,7 +52,9 @@ public class LeagueController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> update(@PathVariable String id, @Valid @ModelAttribute UpdateLeagueDto leagueDto) {
         League updateLeague = leagueService.updateLeague(leagueDto, UUID.fromString(id));
+
         return ResponseEntity.ok(updateLeague);
     }
+
 
 }

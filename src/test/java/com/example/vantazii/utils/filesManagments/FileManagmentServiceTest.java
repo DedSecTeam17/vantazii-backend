@@ -1,14 +1,8 @@
 package com.example.vantazii.utils.filesManagments;
 
 import com.google.common.io.Files;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions.*;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
 import java.io.File;
 
@@ -38,7 +32,7 @@ class FileManagmentServiceTest {
     @Test
     void testGetFileName() {
 
-        File file = fileManagmentService.getFileFullPath("mohammed.html");
+        File file = fileManagmentService.getFileByName("mohammed.html");
 
         System.out.println(file.getPath());
         assertTrue(file.getPath().equals("uploads/mohammed.html"));

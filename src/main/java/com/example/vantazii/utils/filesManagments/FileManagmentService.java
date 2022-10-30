@@ -6,11 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 @Component
 @AllArgsConstructor
@@ -36,14 +34,13 @@ public class FileManagmentService {
     }
 
     public boolean  deleteFile(String fileName){
-        File file = this.root.resolve(fileName).toFile();
+        File file = this.getFileByName(fileName);
         System.out.println(file.getPath());
        return file.delete();
     }
 
 
-    public File getFileFullPath(String fileName) {
+    public File getFileByName(String fileName) {
         return this.root.resolve(fileName).toFile();
-
     }
 }

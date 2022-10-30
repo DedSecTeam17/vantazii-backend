@@ -1,22 +1,18 @@
 package com.example.vantazii.core.security.auth;
 
 import com.example.vantazii.CustomerRole.CustomerRole;
-import com.example.vantazii.RolePermission.RolePermission;
 import com.example.vantazii.core.exception.ApiRequestException;
 import com.example.vantazii.core.exception.CustomStatus.ApiExceptionType;
 import com.example.vantazii.core.exception.PhonenumberNotFoundException;
 import com.example.vantazii.customer.Customer;
 import com.example.vantazii.customer.CustomerRepo;
-import com.example.vantazii.permission.AppPermission;
 import com.example.vantazii.role.AppRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
