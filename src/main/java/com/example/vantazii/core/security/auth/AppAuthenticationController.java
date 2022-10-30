@@ -90,6 +90,13 @@ public class AppAuthenticationController {
         return ResponseEntity.ok(savedCustomer);
     }
 
+    @PostMapping(path = "/admin/register")
+    public ResponseEntity<?> saveUserAsAdmin(@RequestBody Customer user) throws Exception {
+        Customer savedCustomer = userDetailsService.saveUser(user);
+        customerRoleService.createRoleFor(savedCustomer, RoleName.ADMIN);
+        return ResponseEntity.ok(savedCustomer);
+    }
+
     @GetMapping(path = "/user/{phone}")
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_ADMIN') and hasAuthority('READ')")
 

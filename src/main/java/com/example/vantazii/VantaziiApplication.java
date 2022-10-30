@@ -9,12 +9,16 @@ import com.example.vantazii.RolePermission.RolePermissionRepo;
 import com.example.vantazii.core.config.TwillioConfig;
 import com.example.vantazii.customer.Customer;
 import com.example.vantazii.customer.CustomerRepo;
+import com.example.vantazii.league.League;
+import com.example.vantazii.league.LeagueRepo;
 import com.example.vantazii.permission.AppPermission;
 import com.example.vantazii.permission.AppPermissionRepo;
 import com.example.vantazii.permission.enums.PermissionName;
 import com.example.vantazii.role.AppRole;
 import com.example.vantazii.role.AppRoleRepo;
 import com.example.vantazii.role.enums.RoleName;
+import com.example.vantazii.team.Team;
+import com.example.vantazii.team.TeamRepo;
 import com.twilio.Twilio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -48,9 +52,27 @@ public class VantaziiApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(CustomerRepo customerRepo, CustomerRoleRepo customerRoleRepo, AppRoleRepo appRoleRepo, AppPermissionRepo appPermissionRepo, RolePermissionRepo rolePermissionRepo){
+    CommandLineRunner commandLineRunner(CustomerRepo customerRepo, CustomerRoleRepo customerRoleRepo, AppRoleRepo appRoleRepo, AppPermissionRepo appPermissionRepo, RolePermissionRepo rolePermissionRepo, LeagueRepo leagueRepo, TeamRepo teamRepo){
         return args -> {
 
+
+//            League league = new League();
+//            league.setLeagueLogo("path to logo");
+//            league.setLeagueName("Premiuer league");
+//            league.setLeagueDescription("desc");
+//            leagueRepo.save(league);
+
+
+//            League leagues = leagueRepo.findAll().iterator().next();
+
+
+//            System.out.println(leagues.getTeams().stream().findFirst().get().getTeamName());
+//            Team team = new Team();
+//            team.setTeamDescription("desc");
+//            team.setTeamName("name");
+//            team.setTeamLogo("path");
+//            team.setLeague(leagues);
+//            teamRepo.save(team);
 
 
 //            Customer customer = new Customer();
