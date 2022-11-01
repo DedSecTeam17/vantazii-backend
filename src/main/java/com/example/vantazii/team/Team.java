@@ -53,20 +53,18 @@ public class Team {
                     name = "league_fk"
             )
     )
-    @JsonIgnore
     private League league;
 
     @OneToMany(
-            mappedBy = "homeTeam",
-            fetch = FetchType.EAGER
+            mappedBy = "homeTeam"
+
     )
     @JsonIgnore
     private List<Match> homeMatches;
 
 
     @OneToMany(
-            mappedBy = "awayTeam",
-            fetch = FetchType.EAGER
+            mappedBy = "awayTeam"
     )
     @JsonIgnore
     private List<Match> awayMatches;

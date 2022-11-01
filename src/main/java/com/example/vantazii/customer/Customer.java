@@ -3,6 +3,7 @@ package com.example.vantazii.customer;
 
 import com.example.vantazii.CustomerRole.CustomerRole;
 import com.example.vantazii.core.CustomAnnotation.phoneNumber.PhoneNumber;
+import com.example.vantazii.gamble.Gamble;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -86,5 +87,11 @@ public class Customer {
     @JsonIgnore
     private List<CustomerRole> customerRoleIDS = new ArrayList<>();
 
+
+    @OneToMany(
+            mappedBy = "customer"
+    )
+    @JsonIgnore
+    private List<Gamble> gambles;
 
 }

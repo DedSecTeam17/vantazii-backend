@@ -1,5 +1,6 @@
 package com.example.vantazii.match;
 
+import com.example.vantazii.gamble.Gamble;
 import com.example.vantazii.league.League;
 import com.example.vantazii.team.Team;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "match")
@@ -66,6 +68,7 @@ public class Match {
                     name = "away_team_id_fk"
             )
     )
+
     private Team awayTeam;
 
 
@@ -79,5 +82,11 @@ public class Match {
     )
     private League leagune;
 
+
+    @OneToMany(
+            mappedBy = "match"
+    )
+    @JsonIgnore
+    private List<Gamble> gambles;
 
 }

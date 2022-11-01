@@ -31,6 +31,8 @@ public class VantaziiApplication {
 
     @Autowired
     private TwillioConfig twilioConfig;
+
+    private AppRoleRepo appRoleRepo;
     public static void main(String[] args) {
         SpringApplication.run(VantaziiApplication.class, args);
     }
@@ -42,6 +44,8 @@ public class VantaziiApplication {
         System.out.println("initTwilio-------------> {}{}{}");
         Twilio.init(twilioConfig.getAccountSid(),twilioConfig.getAuthToken());
     }
+
+
 
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepo customerRepo, CustomerRoleRepo customerRoleRepo, AppRoleRepo appRoleRepo, AppPermissionRepo appPermissionRepo, RolePermissionRepo rolePermissionRepo, LeagueRepo leagueRepo, TeamRepo teamRepo, MatchRepo matchRepo){

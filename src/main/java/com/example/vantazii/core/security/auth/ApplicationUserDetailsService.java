@@ -33,7 +33,7 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws AuthenticationException {
         Customer customer = this.customerByPhone(phoneNumber);
-        return new User(customer.getEmail(), "",this.getPermissionsFromCustomer(customer));
+        return new User(customer.getPhoneNumber(), "",this.getPermissionsFromCustomer(customer));
     }
 
     private List<SimpleGrantedAuthority> getPermissionsFromCustomer(Customer customer){

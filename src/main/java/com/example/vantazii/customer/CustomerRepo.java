@@ -9,8 +9,10 @@ import java.util.UUID;
 @Repository
 public interface CustomerRepo extends CrudRepository<Customer, UUID> {
 
-    Customer findCustomerByUserName(String userName);
+    Optional<Customer> findCustomerByUserName(String userName);
 
     Optional<Customer> findCustomerByPhoneNumber(String phoneNumber);
+
+    Optional<Customer> findCustomerByEmail(String email);
 
 }
