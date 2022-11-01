@@ -1,6 +1,7 @@
 package com.example.vantazii.league;
 
 
+import com.example.vantazii.match.Match;
 import com.example.vantazii.team.Team;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -47,9 +48,14 @@ public class League {
     private String leagueDescription;
 
     @OneToMany(
-            mappedBy = "league",
-            fetch = FetchType.EAGER
+            mappedBy = "league"
     )
             @JsonIgnore
     List<Team> teams;
+
+    @OneToMany(
+            mappedBy = "leagune"
+    )
+    @JsonIgnore
+    List<Match> matchLeague;
 }

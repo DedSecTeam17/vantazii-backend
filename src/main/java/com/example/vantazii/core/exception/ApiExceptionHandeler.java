@@ -29,12 +29,23 @@ public class ApiExceptionHandeler {
                         new GenralDetails(e.getMessage()));
                 break;
             case NEW_CUSTOMER_TO_APP:
+
+
                 apiException = new ApiException<NewCustomerResponse>(
                         e.getCause(),
                         HttpStatus.NOT_FOUND,
                         ZonedDateTime.now(),
                         new NewCustomerResponse(e.getMessage(), true));
                 break;
+            case NOT_FOUND:
+
+                apiException = new ApiException<String>(
+                        e.getCause(),
+                        HttpStatus.NOT_FOUND,
+                        ZonedDateTime.now(),
+                       e.getMessage());
+                break;
+
         }
 
 

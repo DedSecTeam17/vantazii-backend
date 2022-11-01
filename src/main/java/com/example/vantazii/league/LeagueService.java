@@ -6,7 +6,7 @@ import com.example.vantazii.core.exception.ApiRequestException;
 import com.example.vantazii.core.exception.CustomStatus.ApiExceptionType;
 import com.example.vantazii.league.dto.LeagueDto;
 import com.example.vantazii.league.dto.UpdateLeagueDto;
-import com.example.vantazii.utils.filesManagments.FileManagmentService;
+import com.example.vantazii.fileManagment.FileManagmentService;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;

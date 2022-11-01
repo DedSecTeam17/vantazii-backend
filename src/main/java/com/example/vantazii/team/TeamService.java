@@ -7,7 +7,7 @@ import com.example.vantazii.league.League;
 import com.example.vantazii.league.LeagueRepo;
 import com.example.vantazii.team.dto.CreateTeamDto;
 import com.example.vantazii.team.dto.UpdateTeamDto;
-import com.example.vantazii.utils.filesManagments.FileManagmentService;
+import com.example.vantazii.fileManagment.FileManagmentService;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,9 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class TeamService {
-
-
     private TeamRepo teamRepo;
-
     private LeagueRepo leagueRepo;
     private FileManagmentService fileManagmentService;
-
     private FileManagmentConfig fileManagmentConfig;
 
 
@@ -37,7 +33,6 @@ public class TeamService {
             return teamRepo.findAllByLeague(league.get()).stream().map(this::formTeamWithFileUrl).collect(Collectors.toList());
         }else {
             throw new ApiRequestException("League not found", ApiExceptionType.DEFAULT);
-
         }
     }
 
@@ -66,7 +61,6 @@ public class TeamService {
 
     public Team updateTeam(UpdateTeamDto updateTeamDto, String teamID) {
         Optional<Team> dbTeam = teamRepo.findById(UUID.fromString(teamID));
-
         if (dbTeam.isPresent()) {
             Team team = dbTeam.get();
             if (updateTeamDto.getTeamDescription() != null)

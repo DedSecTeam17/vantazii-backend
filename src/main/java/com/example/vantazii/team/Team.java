@@ -1,12 +1,14 @@
 package com.example.vantazii.team;
 
 import com.example.vantazii.league.League;
+import com.example.vantazii.match.Match;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -25,7 +27,6 @@ public class Team {
     @NotNull
     private String teamName;
 
-
     @Column(
             name = "team_logo",
             nullable = false
@@ -42,7 +43,6 @@ public class Team {
     @NotNull
     private String teamDescription;
 
-
     @ManyToOne(
             fetch = FetchType.EAGER
     )
@@ -55,4 +55,19 @@ public class Team {
     )
     @JsonIgnore
     private League league;
+
+    @OneToMany(
+            mappedBy = "homeTeam",
+            fetch = FetchType.EAGER
+    )
+    @JsonIgnore
+    private List<Match> homeMatches;
+
+
+    @OneToMany(
+            mappedBy = "awayTeam",
+            fetch = FetchType.EAGER
+    )
+    @JsonIgnore
+    private List<Match> awayMatches;
 }

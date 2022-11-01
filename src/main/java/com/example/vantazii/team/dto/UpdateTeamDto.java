@@ -8,11 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class UpdateTeamDto {
-
     private String teamName;
-
-
     private String teamDescription;
-
     private MultipartFile file;
 }

@@ -4,9 +4,13 @@ import com.example.vantazii.CustomerRole.CustomerRoleRepo;
 import com.example.vantazii.RolePermission.RolePermissionRepo;
 import com.example.vantazii.core.config.TwillioConfig;
 import com.example.vantazii.customer.CustomerRepo;
+import com.example.vantazii.league.League;
 import com.example.vantazii.league.LeagueRepo;
+import com.example.vantazii.match.Match;
+import com.example.vantazii.match.MatchRepo;
 import com.example.vantazii.permission.AppPermissionRepo;
 import com.example.vantazii.role.AppRoleRepo;
+import com.example.vantazii.team.Team;
 import com.example.vantazii.team.TeamRepo;
 import com.twilio.Twilio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @SpringBootApplication
 public class VantaziiApplication {
@@ -36,8 +44,26 @@ public class VantaziiApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(CustomerRepo customerRepo, CustomerRoleRepo customerRoleRepo, AppRoleRepo appRoleRepo, AppPermissionRepo appPermissionRepo, RolePermissionRepo rolePermissionRepo, LeagueRepo leagueRepo, TeamRepo teamRepo){
+    CommandLineRunner commandLineRunner(CustomerRepo customerRepo, CustomerRoleRepo customerRoleRepo, AppRoleRepo appRoleRepo, AppPermissionRepo appPermissionRepo, RolePermissionRepo rolePermissionRepo, LeagueRepo leagueRepo, TeamRepo teamRepo, MatchRepo matchRepo){
         return args -> {
+
+
+//            Optional<League> leagues = leagueRepo.findById(UUID.fromString("0bae5629-2d3a-4ecd-af01-0684069b80b7"));
+//
+//            League league = leagues.get();
+//            Team barca = league.getTeams().get(0);
+//            Team update = league.getTeams().get(1);
+//
+//
+//            Match match = new Match();
+//            match.setLeagune(league);
+//            match.setAwayTeam(barca);
+//            match.setHomeTeam(update);
+//            match.setStartDate(LocalDateTime.now().plusHours(6));
+//            match.setEndDate(LocalDateTime.now().plusHours(7));
+//            match.setResult("0:0");
+//
+//            matchRepo.save(match);
 
 
 //            League league = new League();

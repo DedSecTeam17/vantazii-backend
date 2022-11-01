@@ -14,16 +14,12 @@ import java.util.List;
 @RequestMapping("api/v1/team")
 @AllArgsConstructor
 public class TeamController {
-
-
     TeamService teamService;
-
     @GetMapping(path = "/{leagueId}/all")
     @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<Team>> all(@PathVariable String leagueId){
         return ResponseEntity.ok(teamService.all(leagueId));
     }
-
 
     @GetMapping(path = "/{id}")
     @PreAuthorize("hasAuthority('READ')")
