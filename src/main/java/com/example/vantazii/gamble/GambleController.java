@@ -2,6 +2,8 @@ package com.example.vantazii.gamble;
 
 import com.example.vantazii.gamble.dto.CreateGambleDto;
 import com.example.vantazii.gamble.dto.UpdateGambleDto;
+import com.example.vantazii.messgingQueues.dto.GambleMessage;
+import com.example.vantazii.messgingQueues.senders.CustomerGamblingSender;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class GambleController {
     private GambleService gambleService;
+    private CustomerGamblingSender customerGamblingSender;
 
 
     @GetMapping(path = "/all")
@@ -41,7 +44,13 @@ public class GambleController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
 
     public ResponseEntity<Gamble> save(@Valid @RequestBody CreateGambleDto createGambleDto) {
-        return ResponseEntity.ok(gambleService.saveGmable(createGambleDto));
+        Gamble savedGamble = gambleService.saveGmable(createGambleDto);
+        GambleMessage gambleMessage = new GambleMessage();
+        gambleMessage.setGampleID(savedGamble.getId());
+        gambleMessage.setMatchID(savedGamble.getMatch().getId());
+        gambleMessage.setExpectedResult(savedGamble.getExpectedResult());
+        customerGamblingSender.send(gambleMessage);
+        return ResponseEntity.ok(savedGamble);
     }
 
     @PutMapping(path = "/{id}")

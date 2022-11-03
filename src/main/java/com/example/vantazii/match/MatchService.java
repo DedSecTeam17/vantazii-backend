@@ -9,12 +9,10 @@ import com.example.vantazii.match.dto.CreateMatchDto;
 import com.example.vantazii.match.dto.UpdateMatchDto;
 import com.example.vantazii.team.Team;
 import com.example.vantazii.team.TeamRepo;
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +35,7 @@ public class MatchService {
 
     }
 
-    Match findOne(String id) {
+   public Match findOne(String id) {
         Optional<Match> match = matchRepo.findById(UUID.fromString(id));
         if (match.isPresent()) return match.get();
         else throw new ApiRequestException("Match not found", ApiExceptionType.NOT_FOUND);

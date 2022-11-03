@@ -28,6 +28,8 @@ public class Match {
             nullable = false,
             columnDefinition = "TIMESTAMP"
     )
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime startDate;
 
 
@@ -36,6 +38,8 @@ public class Match {
             nullable = false,
             columnDefinition = "TIMESTAMP"
     )
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime endDate;
 
 

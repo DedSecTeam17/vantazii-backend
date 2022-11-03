@@ -11,7 +11,6 @@ import com.example.vantazii.gamble.dto.UpdateGambleDto;
 import com.example.vantazii.match.Match;
 import com.example.vantazii.match.MatchRepo;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +28,8 @@ public class GambleService {
     private CustomerRepo customerRepo;
 
     private MatchRepo matchRepo;
+
+
 
     public List<Gamble> findAllByCustomer() {
         return gambleRepo.findAllByCustomer(getCustomer());
@@ -52,7 +53,9 @@ public class GambleService {
         gamble.setMatch(getMatch(createGambleDto.getMatchId()));
         gamble.setWinner(false);
         gamble.setExpectedResult(createGambleDto.getExpectedResult());
-        return gambleRepo.save(gamble);
+        Gamble savedGamble =  gambleRepo.save(gamble);
+
+        return  savedGamble;
     }
 
     public Gamble updateGmable(UpdateGambleDto updateGambleDto, String gambleId) {
