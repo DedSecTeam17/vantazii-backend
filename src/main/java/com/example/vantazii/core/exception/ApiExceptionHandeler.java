@@ -44,7 +44,13 @@ public class ApiExceptionHandeler {
                         HttpStatus.NOT_FOUND,
                         ZonedDateTime.now(),
                        e.getMessage());
-                break;
+
+            default:
+                apiException = new ApiException<String>(
+                        e.getCause(),
+                        HttpStatus.OK,
+                        ZonedDateTime.now(),
+                        e.getMessage());
 
         }
 
@@ -65,4 +71,14 @@ public class ApiExceptionHandeler {
     }
 
 
+    @ExceptionHandler(value = {Exception.class})
+    ResponseEntity<Object> handleRunTimeException(RuntimeException e) {
+        ApiException<GenralDetails> apiException = new ApiException<GenralDetails>(
+                e.getCause(),
+                HttpStatus.CONFLICT,
+                ZonedDateTime.now(),
+                new GenralDetails(e.getMessage())
+        );
+        return new ResponseEntity<>(apiException, HttpStatus.CONFLICT);
+    }
 }

@@ -8,11 +8,9 @@ import java.util.UUID;
 
 @Data
 public class GambleMessage {
-    private UUID matchID;
+    private String fixtureId;
     private UUID gampleID;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String expectedResult;
-
-
 }

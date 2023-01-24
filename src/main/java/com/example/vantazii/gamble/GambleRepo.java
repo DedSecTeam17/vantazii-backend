@@ -13,5 +13,5 @@ import java.util.UUID;
 public interface GambleRepo extends JpaRepository<Gamble, UUID> {
 
     List<Gamble> findAllByCustomer(Customer customer);
-    List<Gamble> findAllByMatch(Match match);
+//    List<Gamble> findAllByMatch(Match match);
 }

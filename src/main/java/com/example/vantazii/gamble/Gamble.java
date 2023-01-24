@@ -11,7 +11,9 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity(name = "Gamble")
-@Table(name = "gamble")
+@Table(name = "gamble",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"fixture_id","customer_gamble_id"})
+})
 @Data
 public class Gamble {
 
@@ -20,11 +22,10 @@ public class Gamble {
     private UUID id;
 
     @Column(
-           name = "is_winner",
+            name = "is_winner",
             nullable = true
     )
     private boolean isWinner;
-
 
 
     @Column(
@@ -35,16 +36,14 @@ public class Gamble {
     @NotNull
     private String expectedResult;
 
-    @ManyToOne(
+
+    @NotNull
+    @NotBlank
+    @Column(
+            name = "fixture_id",
+            nullable = false
     )
-    @JoinColumn(
-            name = "match_gamble_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(
-                    name = "match_gamble_fk"
-            )
-    )
-    private Match match;
+    private String fixtureId;
 
 
     @ManyToOne(

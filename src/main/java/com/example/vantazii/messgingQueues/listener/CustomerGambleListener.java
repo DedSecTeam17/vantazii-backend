@@ -24,11 +24,11 @@ public class CustomerGambleListener implements MessageListener {
     public void onMessage(Message message) {
         GambleMessage gambleMessage = (GambleMessage) messageConverter.fromMessage(message);
         System.out.println("Recived : --->"+gambleMessage);
-        Match match = matchService.findOne(gambleMessage.getMatchID().toString());
-        boolean isWinner  = match.getResult().equals(gambleMessage.getExpectedResult());
-        UpdateGambleDto updateGambleDto = new UpdateGambleDto();
-        updateGambleDto.setWinner(isWinner);
-        Gamble updatedGample = gambleService.updateGmable(updateGambleDto,gambleMessage.getGampleID().toString());
+//        Match match = matchService.findOne(gambleMessage.getMatchID().toString());
+//        boolean isWinner  = match.getResult().equals(gambleMessage.getExpectedResult());
+//        UpdateGambleDto updateGambleDto = new UpdateGambleDto();
+//        updateGambleDto.setWinner(isWinner);
+//        Gamble updatedGample = gambleService.updateGmable(updateGambleDto,gambleMessage.getGampleID().toString());
         System.out.println("Recived : --->");
     }
 

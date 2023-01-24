@@ -11,7 +11,7 @@ public class CreateGambleDto {
 
     @NotNull
     @NotBlank
-    private String matchId;
+    private String fixtureId;
 
     @NotNull
     @NotBlank

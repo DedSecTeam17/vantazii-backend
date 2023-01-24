@@ -36,9 +36,9 @@ public class GambleService {
     }
 
 
-    public List<Gamble> findAllByMatch(String matchId) {
-        return gambleRepo.findAllByMatch(getMatch(matchId));
-    }
+//    public List<Gamble> findAllByMatch(String matchId) {
+//        return gambleRepo.findAllByMatch(getMatch(matchId));
+//    }
 
     public List<Gamble> all() {
         return gambleRepo.findAll();
@@ -50,7 +50,7 @@ public class GambleService {
     public Gamble saveGmable(CreateGambleDto createGambleDto) {
         Gamble gamble = new Gamble();
         gamble.setCustomer(getCustomer());
-        gamble.setMatch(getMatch(createGambleDto.getMatchId()));
+        gamble.setFixtureId(createGambleDto.getFixtureId());
         gamble.setWinner(false);
         gamble.setExpectedResult(createGambleDto.getExpectedResult());
         Gamble savedGamble =  gambleRepo.save(gamble);

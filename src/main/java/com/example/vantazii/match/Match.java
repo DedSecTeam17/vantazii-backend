@@ -86,11 +86,4 @@ public class Match {
     )
     private League leagune;
 
-
-    @OneToMany(
-            mappedBy = "match"
-    )
-    @JsonIgnore
-    private List<Gamble> gambles;
-
 }

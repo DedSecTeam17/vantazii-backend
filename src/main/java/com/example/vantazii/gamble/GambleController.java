@@ -20,17 +20,17 @@ public class GambleController {
     private CustomerGamblingSender customerGamblingSender;
 
 
-    @GetMapping(path = "/all")
-    @PreAuthorize("hasAuthority('READ')")
-    public ResponseEntity<List<Gamble>> findAll(@RequestParam(required = false) boolean byCustomer, @RequestParam(required = false) String matchId) {
-        if (byCustomer) {
-            return ResponseEntity.ok(gambleService.findAllByCustomer());
-        } else if (matchId != null) {
-            return ResponseEntity.ok(gambleService.findAllByMatch(matchId));
-        } else {
-            return ResponseEntity.ok(gambleService.all());
-        }
-    }
+//    @GetMapping(path = "/all")
+//    @PreAuthorize("hasAuthority('READ')")
+//    public ResponseEntity<List<Gamble>> findAll(@RequestParam(required = false) boolean byCustomer, @RequestParam(required = false) String matchId) {
+//        if (byCustomer) {
+//            return ResponseEntity.ok(gambleService.findAllByCustomer());
+//        } else if (matchId != null) {
+//            return ResponseEntity.ok(gambleService.findAllByMatch(matchId));
+//        } else {
+//            return ResponseEntity.ok(gambleService.all());
+//        }
+//    }
 
 
     @PreAuthorize("hasAuthority('READ')")
@@ -47,7 +47,7 @@ public class GambleController {
         Gamble savedGamble = gambleService.saveGmable(createGambleDto);
         GambleMessage gambleMessage = new GambleMessage();
         gambleMessage.setGampleID(savedGamble.getId());
-        gambleMessage.setMatchID(savedGamble.getMatch().getId());
+        gambleMessage.setFixtureId(createGambleDto.getFixtureId());
         gambleMessage.setExpectedResult(savedGamble.getExpectedResult());
         customerGamblingSender.send(gambleMessage);
         return ResponseEntity.ok(savedGamble);

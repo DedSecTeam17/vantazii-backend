@@ -1,12 +1,15 @@
-rabbitmq:
-  image: rabbitmq:3
-  ports:
-    - "5672:5672"
-    - "15672:15672"
-  environment:
-    - RABBITMQ_DEFAULT_USER=
-    - RABBITMQ_DEFAULT_PASS=
-    - RABBITMQ_PLUGINS_DIR=/opt/rabbitmq/plugins:/usr/lib/rabbitmq/plugins
-  volumes:
-    - ./rabbit/enabled_plugins:/etc/rabbitmq/enabled_plugins
-    - ./rabbit/plugins:/usr/lib/rabbitmq/plugins
+version: '2'
+services:
+  rabbitmq:
+    image: rabbitmq:3
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=
+      - RABBITMQ_DEFAULT_PASS=
+      - RABBITMQ_PLUGINS_DIR=/opt/rabbitmq/plugins:/usr/lib/rabbitmq/plugins
+    volumes:
+      - ./rabbit/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - ./rabbit/plugins:/usr/lib/rabbitmq/plugins
+
