@@ -2,6 +2,7 @@ package com.example.vantazii.core.security.auth;
 
 
 import com.example.vantazii.CustomerRole.CustomerRoleService;
+import com.example.vantazii.DTO.GlobalResponseBody;
 import com.example.vantazii.core.exception.ApiRequestException;
 import com.example.vantazii.core.exception.CustomStatus.ApiExceptionType;
 import com.example.vantazii.core.security.auth.DTO.GenerateOtpDto;
@@ -10,6 +11,8 @@ import com.example.vantazii.core.security.auth.DTO.NewCustomerResponse;
 import com.example.vantazii.core.security.auth.response.JwtResponse;
 import com.example.vantazii.core.security.jwt.JwtTokenService;
 import com.example.vantazii.customer.Customer;
+import com.example.vantazii.customer.CustomerService;
+import com.example.vantazii.customer.dto.CustomerDto;
 import com.example.vantazii.role.enums.RoleName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +36,21 @@ import javax.validation.Valid;
 public class AppAuthenticationController {
 
 
+//    global response
+/***
+ * SUCESS --> TRUE
+ * DATA --->
+ * ERROR ---> {
+ *     MESSAGE -->
+ *
+ *
+ * }
+ *
+ *
+ */
+
+
+
     private final AuthenticationManager authenticationManager;
 
 
@@ -46,14 +64,25 @@ public class AppAuthenticationController {
     private final CustomerRoleService customerRoleService;
 
 
+    private final CustomerService customerService;
+
+
     @PostMapping(path = "/auth/otp/generate")
     public ResponseEntity<?> generateOtp(@Valid @RequestBody GenerateOtpDto generateOtpDto) throws Exception {
         appOtpService.generateOtp(generateOtpDto.getPhoneNumber());
-        if (userDetailsService.customerExist(generateOtpDto.getPhoneNumber())) {
-            return ResponseEntity.ok(new NewCustomerResponse("Sms code sent success", false));
-        } else {
-            throw new ApiRequestException("Customer is new new onboarding need to be create", ApiExceptionType.NEW_CUSTOMER_TO_APP);
+
+        boolean isOldCustomer  = userDetailsService.customerExist(generateOtpDto.getPhoneNumber());
+        if (!isOldCustomer) {
+            CustomerDto customerDto = new CustomerDto();
+            customerDto.setPhoneNumber(generateOtpDto.getPhoneNumber());
+            customerRoleService.createRoleFor( customerService.saveNewCustomer(customerDto), RoleName.CUSTOMER);
         }
+
+        GlobalResponseBody<NewCustomerResponse> globalResponseBody = new  GlobalResponseBody<NewCustomerResponse>();
+        globalResponseBody.setData(new NewCustomerResponse("Sms code sent success", !isOldCustomer));
+        globalResponseBody.setStatus(true);
+        return new ResponseEntity<>(globalResponseBody, HttpStatus.OK);
+
     }
 
 
@@ -65,9 +94,19 @@ public class AppAuthenticationController {
                 final Authentication auth = authenticate(generateTokenDto.getPhoneNumber());
                 SecurityContextHolder.getContext().setAuthentication(auth);
                 Customer customer = userDetailsService.customerByPhone(generateTokenDto.getPhoneNumber());
-                return ResponseEntity.ok(new JwtResponse(jwtTokenUtil.generateToken(auth), customer));
+
+                customerService.updateCustomerToVerfied(customer);
+
+                GlobalResponseBody<JwtResponse> globalResponseBody = new  GlobalResponseBody<JwtResponse>();
+                globalResponseBody.setData(new JwtResponse(jwtTokenUtil.generateToken(auth), customer));
+                globalResponseBody.setStatus(true);
+                return new ResponseEntity<>(globalResponseBody, HttpStatus.OK);
+
             } else {
-               return new ResponseEntity<>(new NewCustomerResponse("Customer not found with phone number", true), HttpStatus.OK);
+                GlobalResponseBody<NewCustomerResponse> globalResponseBody = new  GlobalResponseBody<NewCustomerResponse>();
+                globalResponseBody.setData(new NewCustomerResponse("Customer not found with phone number", true));
+                globalResponseBody.setStatus(true);
+                return new ResponseEntity<>(globalResponseBody, HttpStatus.OK);
 
             }
 
@@ -77,16 +116,22 @@ public class AppAuthenticationController {
     }
 
     @PostMapping(path = "/register")
-    public ResponseEntity<?> saveUser(@RequestBody Customer user) throws Exception {
-        Customer savedCustomer = userDetailsService.saveUser(user);
-        customerRoleService.createRoleFor(savedCustomer, RoleName.CUSTOMER);
-        return ResponseEntity.ok(savedCustomer);
+    public ResponseEntity<?> saveUser(@Valid @ModelAttribute  CustomerDto customerDto) throws Exception {
+        Customer savedCustomer = customerService.updateCustomer(customerDto);
+
+
+        GlobalResponseBody<Customer> globalResponseBody = new  GlobalResponseBody<Customer>();
+        globalResponseBody.setData(savedCustomer);
+        globalResponseBody.setStatus(true);
+        return new ResponseEntity<>(globalResponseBody, HttpStatus.OK);
+
     }
 
     @PostMapping(path = "/admin/register")
-    public ResponseEntity<?> saveUserAsAdmin(@RequestBody Customer user) throws Exception {
-        Customer savedCustomer = userDetailsService.saveUser(user);
-        customerRoleService.createRoleFor(savedCustomer, RoleName.ADMIN);
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
+    public ResponseEntity<?> saveUserAsAdmin(@RequestBody CustomerDto customerDto) throws Exception {
+        Customer savedCustomer = customerService.updateCustomer(customerDto);
+
         return ResponseEntity.ok(savedCustomer);
     }
 

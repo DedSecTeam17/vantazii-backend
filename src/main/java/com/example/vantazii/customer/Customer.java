@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -21,10 +22,10 @@ import java.util.UUID;
 @Entity(name = "Customer")
 @RequiredArgsConstructor
 @Table(name = "customer", uniqueConstraints = {
-        @UniqueConstraint(
-                name = "customer_unique_email_constraint",
-                columnNames = "email"
-        ),
+//        @UniqueConstraint(
+//                name = "customer_unique_email_constraint",
+//                columnNames = "email"
+//        ),
         @UniqueConstraint(
                 name = "customer_unique_phone",
                 columnNames = "phone_number"
@@ -37,25 +38,20 @@ public class Customer {
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
     //
-    @NotNull
-    @NotBlank(message = "Name is required :D")
+
     @Column(
             name = "user_name",
-            nullable = false,
             columnDefinition = "TEXT"
     )
+    @Nullable
     private String userName;
 
 
-    //
     @Column(
             name = "email",
-            nullable = false,
             columnDefinition = "TEXT"
+
     )
-    @NotNull
-    @NotBlank
-    @Email
     private String email;
 
 
@@ -70,6 +66,16 @@ public class Customer {
     private String phoneNumber;
 
 
+
+
+    @Column(
+            name = "profile_image_url",
+            columnDefinition = "TEXT"
+    )
+    @Nullable
+    private String profileImageUrl;
+
+
     //
     @Column(
             name = "created_at",
@@ -77,6 +83,16 @@ public class Customer {
     )
     @JsonIgnore
     private LocalDateTime createdAt;
+
+
+
+    @Column(
+            name = "verified",
+            columnDefinition = "BOOL"
+
+    )
+    private boolean verified;
+
 
 
     @OneToMany(

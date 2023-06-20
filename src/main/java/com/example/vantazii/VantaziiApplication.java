@@ -20,6 +20,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -32,13 +33,11 @@ public class VantaziiApplication {
     private AppRoleRepo appRoleRepo;
 
 
-
     @Autowired
     CustomerGamblingSender sender;
     public static void main(String[] args) {
         SpringApplication.run(VantaziiApplication.class, args);
     }
-
 
 
     @PostConstruct
@@ -47,13 +46,15 @@ public class VantaziiApplication {
         Twilio.init(twilioConfig.getAccountSid(),twilioConfig.getAuthToken());
     }
 
-
-
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepo customerRepo, CustomerRoleRepo customerRoleRepo, AppRoleRepo appRoleRepo, AppPermissionRepo appPermissionRepo, RolePermissionRepo rolePermissionRepo, LeagueRepo leagueRepo, TeamRepo teamRepo, MatchRepo matchRepo, GambleRepo gambleRepo){
         return args -> {
 
 
+//            System.out.println("====================> command line runner");
+//            String [] commandLiner = CommandLineRunner.class.getName().split("\\.");
+//            System.out.println(commandLiner[commandLiner.length-1].equals("CommandLineRunner"));
+//            ---------->
 
 //            for (int i = 0; i <5 ; i++) {
 //                Gamble gamble = new Gamble();

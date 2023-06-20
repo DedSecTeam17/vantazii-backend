@@ -45,7 +45,7 @@ public class AppSecurityConfig {
                 .and()
                 // dont authenticate this particular request
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/token", "/api/v1/register","/api/v1/admin/register","/api/v1/auth/otp/**","/api/v1/files/**","/api/v1/footbal-service/**").permitAll().anyRequest().authenticated().and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+                .antMatchers("/api/v1/auth/token","/api/v1/admin/register","/api/v1/auth/otp/**","/api/v1/files/**","/api/v1/footbal-service/**").permitAll().anyRequest().authenticated().and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
 
     }
 }

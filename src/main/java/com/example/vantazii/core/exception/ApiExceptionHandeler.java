@@ -1,5 +1,6 @@
 package com.example.vantazii.core.exception;
 
+import com.example.vantazii.DTO.GlobalResponseBody;
 import com.example.vantazii.core.exception.ExceptionDetails.GenralDetails;
 import com.example.vantazii.core.security.auth.DTO.NewCustomerResponse;
 import lombok.ToString;
@@ -22,20 +23,20 @@ public class ApiExceptionHandeler {
         switch (e.getApiExceptionType()) {
 
             case DEFAULT:
-                apiException = new ApiException<GenralDetails>(
+                apiException = new ApiException<String>(
                         e.getCause(),
                         HttpStatus.BAD_REQUEST,
                         ZonedDateTime.now(),
-                        new GenralDetails(e.getMessage()));
+                        e.getMessage());
                 break;
             case NEW_CUSTOMER_TO_APP:
 
 
-                apiException = new ApiException<NewCustomerResponse>(
+                apiException = new ApiException<String>(
                         e.getCause(),
-                        HttpStatus.NOT_FOUND,
+                        HttpStatus.OK,
                         ZonedDateTime.now(),
-                        new NewCustomerResponse(e.getMessage(), true));
+                        e.getMessage());
                 break;
             case NOT_FOUND:
 
@@ -54,8 +55,19 @@ public class ApiExceptionHandeler {
 
         }
 
+        GlobalResponseBody<ApiException> globalResponseBody = new  GlobalResponseBody<ApiException>();
+        globalResponseBody.setStatus(false);
 
-        return new ResponseEntity<>(apiException, apiException.getHttpStatus());
+
+        GlobalResponseBody.Error error = new GlobalResponseBody.Error();
+
+
+        error.setErrorCode(apiException.getHttpStatus().getReasonPhrase());
+        error.setMessage(apiException.getDetails().toString());
+        globalResponseBody.setError(error);
+
+
+        return new ResponseEntity<>(globalResponseBody, apiException.getHttpStatus());
     }
 
 
