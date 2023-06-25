@@ -7,10 +7,13 @@ import com.example.vantazii.customer.dto.CustomerDto;
 import com.example.vantazii.fileManagment.FileManagmentService;
 import com.example.vantazii.league.League;
 import lombok.AllArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -48,6 +51,19 @@ public class CustomerService {
         customer.setPhoneNumber(customerDto.getPhoneNumber());
         return customerRepo.save(customer);
     }
+
+    public List<Customer> allCustomers(){
+        return  customerRepo.findAll();
+    }
+
+    public  Customer findCustomerByPhoneNumber(String customerPhoneNumber){
+        Optional<Customer> customer =  customerRepo.findCustomerByPhoneNumber(customerPhoneNumber);
+        if ( customer.isPresent())
+            return  customer.get();
+        else
+            throw new ApiRequestException("Customer with this phone number not found", ApiExceptionType.NOT_FOUND);
+    }
+
 
 
     public Customer updateCustomerToVerfied(Customer customer){

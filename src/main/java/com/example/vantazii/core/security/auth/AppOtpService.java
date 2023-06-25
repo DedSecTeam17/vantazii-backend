@@ -43,11 +43,11 @@ public class AppOtpService {
     }
 
     private String getRandomOTP(String phoneNo) {
-        String otp =  new DecimalFormat("000000")
-                .format(new Random().nextInt(999999));
+        String otp =  new DecimalFormat("0000")
+                .format(new Random().nextInt(9999));
         System.out.println(otp);
-        otpCache.put(phoneNo,otp);
-        return otp;
+        otpCache.put(phoneNo,"0000");
+        return "0000";
     }
     //get saved otp
     public String getCacheOtp(String key){

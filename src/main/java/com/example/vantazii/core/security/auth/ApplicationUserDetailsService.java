@@ -4,6 +4,7 @@ import com.example.vantazii.CustomerRole.CustomerRole;
 import com.example.vantazii.core.exception.ApiRequestException;
 import com.example.vantazii.core.exception.CustomStatus.ApiExceptionType;
 import com.example.vantazii.core.exception.PhonenumberNotFoundException;
+import com.example.vantazii.core.security.auth.facade.IAuthenticationFacade;
 import com.example.vantazii.customer.Customer;
 import com.example.vantazii.customer.CustomerRepo;
 import com.example.vantazii.role.AppRole;
@@ -30,10 +31,22 @@ public class ApplicationUserDetailsService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private IAuthenticationFacade authenticationFacade;
+
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws AuthenticationException {
         Customer customer = this.customerByPhone(phoneNumber);
         return new User(customer.getPhoneNumber(), "",this.getPermissionsFromCustomer(customer));
+    }
+
+
+    public Customer getAuthenticatedCustomer() {
+        Optional<Customer> customer = customerRepo.findCustomerByPhoneNumber(authenticationFacade.getAuthentication().getName());
+
+        if (customer.isPresent())
+            return customer.get();
+        else
+            throw new ApiRequestException("Customer not found", new Throwable().fillInStackTrace(), ApiExceptionType.DEFAULT);
     }
 
     private List<SimpleGrantedAuthority> getPermissionsFromCustomer(Customer customer){

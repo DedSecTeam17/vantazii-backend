@@ -11,8 +11,8 @@ public class GenerateTokenDto {
     @PhoneNumber
     private String phoneNumber;
 
-    @Size(max = 6,message = "invalid code")
-    @Size(min = 6,message = "invalid code")
+    @Size(max = 4,message = "invalid code")
+    @Size(min = 4,message = "invalid code")
     private String token;
 
     private void test(){

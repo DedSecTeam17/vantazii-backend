@@ -2,6 +2,7 @@ package com.example.vantazii.customer;
 
 
 import com.example.vantazii.CustomerRole.CustomerRole;
+import com.example.vantazii.chat.Chat;
 import com.example.vantazii.core.CustomAnnotation.phoneNumber.PhoneNumber;
 import com.example.vantazii.gamble.Gamble;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,7 +34,6 @@ import java.util.UUID;
 })
 public class Customer {
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
@@ -109,5 +109,24 @@ public class Customer {
     )
     @JsonIgnore
     private List<Gamble> gambles;
+
+
+
+    @OneToMany(
+            mappedBy = "sender"
+    )
+    @JsonIgnore
+    private List<Chat> senderChat;
+
+
+
+    @OneToMany(
+            mappedBy = "reciver"
+    )
+    @JsonIgnore
+    private List<Chat> reciverChat;
+
+
+
 
 }
